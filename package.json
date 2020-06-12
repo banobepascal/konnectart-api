@@ -1,0 +1,11 @@
+{
+  "name": "konnectart-api",
+  "version": "1.0.0",
+  "description": "a photo sharing app",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Banobe Pascal",
+  "license": "ISC"
+}
