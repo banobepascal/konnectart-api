@@ -2,9 +2,10 @@
   "name": "konnectart-api",
   "version": "1.0.0",
   "description": "a photo sharing app",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "npm test"
+    "start": "nodemon server.js",
+    "test": "jest --watchAll --verbose --coverage"
   },
   "author": "Banobe Pascal",
   "license": "ISC",
