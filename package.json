@@ -4,7 +4,7 @@
   "description": "a photo sharing app",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon --exec babel-node server.js",
     "test": "jest --watchAll --verbose --coverage"
   },
   "author": "Banobe Pascal",
@@ -22,6 +22,9 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
     "jest": "^26.0.1",
     "nodemon": "^2.0.4",
     "supertest": "^4.0.2"
