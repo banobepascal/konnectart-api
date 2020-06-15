@@ -1,8 +1,8 @@
-import express from 'express';
+import app from './index';
+import config from './api/config/config';
 
-const app = express();
-
-const port = 3000;
-const server = app.listen(port, () => console.log(`Listening on port ${port} ...`));
-
-export default server;
+if (process.env.NODE_ENV === 'test') {
+  app.listen(config.test_port, () => console.log(`Listening on port ${config.test_port} ...`));
+} else {
+  app.listen(config.port, () => console.log(`Listening on port ${config.port} ...`));
+}
