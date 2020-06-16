@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
 
-const Image = mongoose.model('Image', new mongoose.Schema({
+const Image = mongoose.model('Images', new mongoose.Schema({
   image: {
     data: Buffer,
     contentType: String,
