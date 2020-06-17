@@ -21,4 +21,4 @@ class Helpers {
   }
 }
 
-export default new Helpers();
+export default Helpers;

@@ -1,45 +1,59 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
+import jwt from 'jsonwebtoken';
+import ENV from 'dotenv';
 
-const User = mongoose.model(
-  'User',
-  new mongoose.Schema({
-    firstname: {
-      type: String,
-      required: true,
-      minlength: 2,
-      maxlength: 20,
+ENV.config();
+
+const userSchema = new mongoose.Schema({
+  firstname: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 20,
+  },
+  lastname: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 20,
+  },
+  username: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 50,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 255,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+    maxlength: 1024,
+  },
+  isArtist: Boolean,
+  isAdmin: Boolean,
+});
+
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    { _id: this._id, isArtist: this.isArtist, isAdmin: this.isAdmin },
+    process.env.JWT_KEY,
+    {
+      expiresIn: '1day',
     },
-    lastname: {
-      type: String,
-      required: true,
-      minlength: 2,
-      maxlength: 20,
-    },
-    username: {
-      type: String,
-      required: true,
-      minlength: 2,
-      maxlength: 50,
-      unique: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 255,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 8,
-      maxlength: 1024,
-    },
-    isArtist: Boolean,
-    isAdmin: Boolean,
-  }),
-);
+  );
+  return token;
+};
+
+const User = mongoose.model('User', userSchema);
 
 function validateUser(user) {
   const schema = {

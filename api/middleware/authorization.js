@@ -22,8 +22,6 @@ const verifyToken = (req, res, next) => {
       message: 'unauthorised to use this resource, please signup/login',
     });
   }
-
-  return next;
 };
 
 export default verifyToken;
