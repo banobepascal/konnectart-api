@@ -5,6 +5,7 @@ const Image = mongoose.model('Images', new mongoose.Schema({
   image: {
     data: Buffer,
     contentType: String,
+    required: true,
   },
 }));
 
