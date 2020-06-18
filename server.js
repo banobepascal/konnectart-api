@@ -1,12 +1,12 @@
-import express from 'express';
+import app from './api/startup/index';
 import config from './api/config/config';
 
-const app = express();
-
-require('./api/startup/routes')(app);
 require('./api/startup/db')();
 
-const port = process.env.PORT || 3000;
-const server = app.listen(port, () => console.log(`Listening on port ${port}...`));
+if (process.env.NODE_ENV === 'test') {
+  app.listen(config.test_port, () => console.log(`Listening on port ${config.test_port}...`));
+} else {
+  app.listen(config.port, () => console.log(`Listening on port ${config.port}...`));
+}
 
-module.exports = server;
+export default app;

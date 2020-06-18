@@ -9,12 +9,12 @@ describe('api/returns', () => {
   const exec = () => {
     request(server).post('/api/returns').set('authorization', token);
   };
-  beforeEach(() => {
+  beforeEach(async () => {
     server = require('../server');
     token = new User().generateAuthToken();
   });
-  afterEach(() => {
-     server.close();
+  afterEach(async () => {
+    await server.close();
   });
 
   it('should return 401 if client is not logged in', async () => {

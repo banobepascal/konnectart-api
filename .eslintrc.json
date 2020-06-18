@@ -1,15 +1,16 @@
 {
-    "env": {
-        "es2020": true,
-        "node": true
-    },
-    "extends": [
-        "airbnb-base"
-    ],
-    "parserOptions": {
-        "ecmaVersion": 11,
-        "sourceType": "module"
-    },
-    "rules": {
-    }
+  "env": {
+    "es2020": true,
+    "node": true
+  },
+  "extends": ["airbnb-base"],
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "class-methods-use-this": "off",
+    "comma-dangle": 0
+  }
 }
