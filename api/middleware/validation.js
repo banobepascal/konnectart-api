@@ -18,15 +18,15 @@ class Validation {
     const schema = {
       firstname: joiValidations.error(() => ({
         message:
-          'firstname should start with a letter and minimum of 3 characters',
+          'firstname should start with a letter and minimum of 2 characters',
       })),
       lastname: joiValidations.error(() => ({
         message:
-          'lastname should start with a letter and minimum of 3 characters',
+          'lastname should start with a letter and minimum of 2 characters',
       })),
       username: joiValidations.error(() => ({
         message:
-          'username should start with a letter and minimum of 3 characters',
+          'username should start with a letter and minimum of 2 characters',
       })),
       email: Joi.string()
         .min(5)
