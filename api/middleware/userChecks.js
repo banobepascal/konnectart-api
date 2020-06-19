@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import User from '../models/user';
 
@@ -15,6 +14,28 @@ class UserChecks {
     if (checkEmail) {
       return res.status(409).json({
         error: 'email already exists, please choose another email',
+      });
+    }
+
+    next();
+  }
+
+  async checkSignin(req, res, next) {
+    const checkUsername = await User.findOne({ username: req.body.username });
+    if (!checkUsername) {
+      return res.status(400).json({
+        error: 'Invalid username or password',
+      });
+    }
+
+    const checkPassword = await bcrypt.compare(
+      req.body.password,
+      checkUsername.password
+    );
+
+    if (!checkPassword) {
+      return res.status(400).json({
+        error: 'Invalid username or password',
       });
     }
 

@@ -18,10 +18,21 @@ class UserAuth {
 
     const token = Helpers.generateToken(user.id, user.isArtist, user.isAdmin);
     res.status(201).json({
-      status: 201,
       message: 'Your account has been created successfully',
       data: token,
-      user,
+    });
+  }
+
+  async signIn(req, res) {
+    const checkUsername = await User.findOne({ username: req.body.username });
+    const token = Helpers.generateToken(
+      checkUsername.id,
+      checkUsername.isArtist,
+      checkUsername.isAdmin
+    );
+    return res.status(200).json({
+      message: 'Successfully logged in',
+      data: token,
     });
   }
 }

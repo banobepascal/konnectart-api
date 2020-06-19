@@ -12,4 +12,6 @@ userRoute.post(
   UserAuth.signUp
 );
 
+userRoute.post('/api/auth/signin', UserChecks.checkSignin, UserAuth.signIn);
+
 export default userRoute;
