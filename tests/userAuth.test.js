@@ -11,7 +11,7 @@ describe('api/auth', () => {
     server = require('../server');
   });
   afterEach(async () => {
-    await User.deleteOne({});
+    // await User.deleteOne({});
     await server.close();
   });
 
@@ -33,7 +33,7 @@ describe('api/auth', () => {
       password,
       confirmPassword,
       isArtist,
-      isAdmin
+      isAdmin,
     });
 
     beforeEach(() => {
@@ -47,22 +47,28 @@ describe('api/auth', () => {
       (isAdmin = false);
     });
 
-    it('should return 400 if firstname is less than 2 character', async () => {
+    it('should return 201 on successful SignUp', async () => {
+      // username = 'chris@evans';
+      // email = 'chrisevans@test.com';
+      const res = await exec();
+      expect(res.status).toBe(201);
+    });
+    it('should return 400 if firstname is not a valid string', async () => {
       firstname = '1';
       const res = await exec();
       expect(res.status).toBe(400);
     });
-    it('should return 400 if lastname is less than 2 character', async () => {
+    it('should return 400 if lastname is not a valid string', async () => {
       lastname = '';
       const res = await exec();
       expect(res.status).toBe(400);
     });
-    it('should return 400 if username is less than 2 character', async () => {
+    it('should return 400 if username is not a valid string', async () => {
       username = '';
       const res = await exec();
       expect(res.status).toBe(400);
     });
-    it('should return 400 if email is not valid', async () => {
+    it('should return 400 if email is not in valid format', async () => {
       email = 'amm.com';
       const res = await exec();
       expect(res.status).toBe(400);
@@ -72,7 +78,7 @@ describe('api/auth', () => {
       const res = await exec();
       expect(res.status).toBe(400);
     });
-    it('should return 400 if password do not match', async () => {
+    it('should return 400 if passwords do not match', async () => {
       confirmPassword = 'Chrisevans';
       const res = await exec();
       expect(res.status).toBe(400);
@@ -86,6 +92,16 @@ describe('api/auth', () => {
       isAdmin = null;
       const res = await exec();
       expect(res.status).toBe(400);
+    });
+    it('should return 409 if username is already taken', async () => {
+      username = 'chris@evans';
+      const res = await exec();
+      expect(res.status).toBe(409);
+    });
+    it('should return 409 if email is already taken', async () => {
+      email = 'chris@test.com';
+      const res = await exec();
+      expect(res.status).toBe(409);
     });
   });
 });
