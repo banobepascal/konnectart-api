@@ -10,8 +10,8 @@ describe('api/auth', () => {
   beforeEach(() => {
     server = require('../server');
   });
-  afterEach(async () => {
-    // await User.deleteOne({});
+  afterAll(async () => {
+    await User.deleteMany({});
     await server.close();
   });
 
@@ -47,9 +47,7 @@ describe('api/auth', () => {
       (isAdmin = false);
     });
 
-    it('should return 201 on successful SignUp', async () => {
-      // username = 'chris@evans';
-      // email = 'chrisevans@test.com';
+    it('should signup user on success', async () => {
       const res = await exec();
       expect(res.status).toBe(201);
     });
@@ -94,7 +92,7 @@ describe('api/auth', () => {
       expect(res.status).toBe(400);
     });
     it('should return 409 if username is already taken', async () => {
-      username = 'chris@evans';
+      username = 'chrisevans';
       const res = await exec();
       expect(res.status).toBe(409);
     });

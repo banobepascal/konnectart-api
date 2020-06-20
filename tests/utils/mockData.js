@@ -1,10 +1,10 @@
 exports.goodUser = {
-  firstname: 'Chris',
-  lastname: 'Evans',
-  username: 'chrisevans',
-  email: 'chris@test.com',
-  password: 'Chrisevanstest1!',
-  confirmPassword: 'Chrisevanstest1!',
+  firstname: 'john',
+  lastname: 'Doe',
+  username: 'johndoe',
+  email: 'johndoe@test.com',
+  password: 'Johndoetest1!',
+  confirmPassword: 'Johndoetest1!',
   isArtist: false,
   isAdmin: false
 };
