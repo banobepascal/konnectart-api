@@ -3,20 +3,9 @@
 // import mongoose from 'mongoose';
 import request from 'supertest';
 import User from '../api/models/user';
-// import mockUser from './utils/mockData';
+import mockData from './utils/mockData';
 
 let server;
-const mockUser = {
-  firstname: 'john',
-  lastname: 'Doe',
-  username: 'johndoe',
-  email: 'chris@test.com',
-  password: 'Johndoetest1!',
-  confirmPassword: 'Johndoetest1!',
-  isArtist: false,
-  isAdmin: false
-};
-
 describe('api/auth', () => {
   beforeEach(() => {
     server = require('../server');
@@ -35,7 +24,16 @@ describe('api/auth', () => {
   let isArtist;
   let isAdmin;
 
-  const execSignup = async () => request(server).post('/api/auth/signup').send(mockUser);
+  const execSignup = async () => request(server).post('/api/auth/signup').send({
+    firstname,
+    lastname,
+    username,
+    email,
+    password,
+    confirmPassword,
+    isArtist,
+    isAdmin,
+  });
 
   beforeEach(() => {
     (firstname = 'Chris'),
@@ -53,42 +51,42 @@ describe('api/auth', () => {
       expect(res.status).toBe(201);
     });
     it('should return 400 if firstname is not a valid string', async () => {
-      mockUser.firstname = '1';
+      firstname = '1';
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
     it('should return 400 if lastname is not a valid string', async () => {
-      mockUser.lastname = '';
+      lastname = '';
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
     it('should return 400 if username is not a valid string', async () => {
-      mockUser.username = '';
+      username = '';
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
     it('should return 400 if email is not in valid format', async () => {
-      mockUser.email = 'amm.com';
+      email = 'amm.com';
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
     it('should return 400 if password is not strong', async () => {
-      mockUser.password = 'Chris';
+      password = 'Chris';
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
     it('should return 400 if passwords do not match', async () => {
-      mockUser.confirmPassword = 'Chrisevans';
+      confirmPassword = 'Chrisevans';
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
     it('should return 400 if isArtist is not boolean', async () => {
-      mockUser.isArtist = null;
+      isArtist = null;
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
     it('should return 400 if isAdmin is not boolean', async () => {
-      mockUser.isAdmin = null;
+      isAdmin = null;
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
@@ -98,7 +96,7 @@ describe('api/auth', () => {
       expect(res.status).toBe(409);
     });
     it('should return 409 if email is already taken', async () => {
-      mockUser.email = 'chris@test.com';
+      email = 'chris@test.com';
       const res = await execSignup();
       expect(res.status).toBe(409);
     });
