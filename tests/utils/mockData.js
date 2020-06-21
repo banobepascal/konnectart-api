@@ -1,4 +1,4 @@
-exports.goodUser = {
+exports.mockUser = {
   firstname: 'john',
   lastname: 'Doe',
   username: 'johndoe',
