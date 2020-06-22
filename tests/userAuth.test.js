@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-undef */
 // import mongoose from 'mongoose';
 import request from 'supertest';
 import User from '../api/models/user';
-import mockData from './utils/mockData';
 
 let server;
 describe('api/auth', () => {
