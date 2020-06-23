@@ -1,4 +1,3 @@
-// import mongoose from 'mongoose';
 import request from 'supertest';
 import Artist from '../api/models/artist';
 
@@ -22,7 +21,7 @@ describe('api/auth', () => {
   let isArtist;
   let isAdmin;
 
-  const execSignup = async () => request(server).post('/api/auth/signup').send({
+  const execSignup = async () => request(server).post('/api/auth/artist/signup').send({
     firstname,
     lastname,
     username,
@@ -108,7 +107,7 @@ describe('api/auth', () => {
   });
 
   describe('POST /signin', () => {
-    const execSignin = async () => request(server).post('/api/auth/signin').send({
+    const execSignin = async () => request(server).post('/api/auth/artist/signin').send({
       username,
       password,
     });

@@ -1,5 +1,5 @@
-import Artist from '../models/artist';
-import Helpers from '../helpers/helpers';
+import Artist from '../../models/artist';
+import Helpers from '../../helpers/helpers';
 
 class ArtistAuth {
   async signUp(req, res) {
@@ -25,11 +25,11 @@ class ArtistAuth {
   }
 
   async signIn(req, res) {
-    const checkArtistname = await Artist.findOne({ username: req.body.username });
+    const artistUsername = await Artist.findOne({ username: req.body.username });
     const token = Helpers.generateToken(
-      checkArtistname.id,
-      checkArtistname.isArtist,
-      checkArtistname.isAdmin
+      artistUsername.id,
+      artistUsername.isArtist,
+      artistUsername.isAdmin
     );
     return res.status(200).json({
       message: 'Successfully logged in',

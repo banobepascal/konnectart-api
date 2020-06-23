@@ -1,17 +1,22 @@
 import bcrypt from 'bcrypt';
+import User from '../models/user';
 import Artist from '../models/artist';
 
-class ArtistChecks {
+class UserChecks {
   async checkSignup(req, res, next) {
-    const checkUsername = await Artist.findOne({ username: req.body.username });
-    if (checkUsername) {
+    const artistUsername = await Artist.findOne({
+      username: req.body.username,
+    });
+    const checkUsername = await User.findOne({ username: req.body.username });
+    if (artistUsername || checkUsername) {
       return res.status(409).json({
         username: 'username is already taken',
       });
     }
 
-    const checkEmail = await Artist.findOne({ email: req.body.email });
-    if (checkEmail) {
+    const checkArtistEmail = await Artist.findOne({ email: req.body.email });
+    const checkUserEmail = await User.findOne({ email: req.body.email });
+    if (checkArtistEmail || checkUserEmail) {
       return res.status(409).json({
         email: 'email already in use',
       });
@@ -20,20 +25,44 @@ class ArtistChecks {
     next();
   }
 
-  async checkSignin(req, res, next) {
-    const checkUsername = await Artist.findOne({ username: req.body.username });
+  async checkArtistSignin(req, res, next) {
+    const artistUsername = await Artist.findOne({
+      username: req.body.username,
+    });
+
+    if (!artistUsername) {
+      return res.status(404).json({
+        username: 'Invalid username or password',
+      });
+    }
+    const checkArtistPassword = await bcrypt.compare(
+      req.body.password,
+      artistUsername.password
+    );
+
+    if (!checkArtistPassword) {
+      return res.status(404).json({
+        password: 'Invalid username or password',
+      });
+    }
+
+    next();
+  }
+
+  async checkUserSignin(req, res, next) {
+    const checkUsername = await User.findOne({ username: req.body.username });
     if (!checkUsername) {
       return res.status(404).json({
         username: 'Invalid username or password',
       });
     }
 
-    const checkPassword = await bcrypt.compare(
+    const checkUserPassword = await bcrypt.compare(
       req.body.password,
       checkUsername.password
     );
 
-    if (!checkPassword) {
+    if (!checkUserPassword) {
       return res.status(404).json({
         password: 'Invalid username or password',
       });
@@ -43,4 +72,4 @@ class ArtistChecks {
   }
 }
 
-export default new ArtistChecks();
+export default new UserChecks();
