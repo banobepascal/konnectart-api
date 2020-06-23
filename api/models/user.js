@@ -1,24 +1,11 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
-  firstname: {
-    type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 50,
-  },
-  lastname: {
-    type: String,
-    required: true,
-    minlength: 2,
-    maxlength: 50,
-  },
+const User = mongoose.model('User', new mongoose.Schema({
   username: {
     type: String,
-    required: true,
     minlength: 2,
-    maxlength: 50,
-    unique: true,
+    maxlength: 255,
+    required: true
   },
   email: {
     type: String,
@@ -33,10 +20,7 @@ const userSchema = new mongoose.Schema({
     minlength: 8,
     maxlength: 1024,
   },
-  isArtist: Boolean,
   isAdmin: Boolean,
-});
-
-const User = mongoose.model('User', userSchema);
+}));
 
 export default User;

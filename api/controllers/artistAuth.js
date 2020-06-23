@@ -1,22 +1,23 @@
-import User from '../models/user';
+import Artist from '../models/artist';
 import Helpers from '../helpers/helpers';
 
-class UserAuth {
+class ArtistAuth {
   async signUp(req, res) {
-    const user = new User({
+    const artist = new Artist({
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-      isArtist: req.body.isArtist,
+      bio: req.body.bio,
+      isArtist: true,
       isAdmin: req.body.isAdmin,
     });
 
-    user.password = Helpers.hashpassword(user.password);
-    await user.save();
+    artist.password = Helpers.hashpassword(artist.password);
+    await artist.save();
 
-    const token = Helpers.generateToken(user.id, user.isArtist, user.isAdmin);
+    const token = Helpers.generateToken(artist.id, artist.isArtist, artist.isAdmin);
     res.status(201).json({
       message: 'Your account has been created successfully',
       data: token,
@@ -24,11 +25,11 @@ class UserAuth {
   }
 
   async signIn(req, res) {
-    const checkUsername = await User.findOne({ username: req.body.username });
+    const checkArtistname = await Artist.findOne({ username: req.body.username });
     const token = Helpers.generateToken(
-      checkUsername.id,
-      checkUsername.isArtist,
-      checkUsername.isAdmin
+      checkArtistname.id,
+      checkArtistname.isArtist,
+      checkArtistname.isAdmin
     );
     return res.status(200).json({
       message: 'Successfully logged in',
@@ -37,4 +38,4 @@ class UserAuth {
   }
 }
 
-export default new UserAuth();
+export default new ArtistAuth();

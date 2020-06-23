@@ -1,19 +1,19 @@
 import bcrypt from 'bcrypt';
-import User from '../models/user';
+import Artist from '../models/artist';
 
-class UserChecks {
+class ArtistChecks {
   async checkSignup(req, res, next) {
-    const checkUsername = await User.findOne({ username: req.body.username });
+    const checkUsername = await Artist.findOne({ username: req.body.username });
     if (checkUsername) {
       return res.status(409).json({
-        error: 'username already taken, please choose another username',
+        username: 'username is already taken',
       });
     }
 
-    const checkEmail = await User.findOne({ email: req.body.email });
+    const checkEmail = await Artist.findOne({ email: req.body.email });
     if (checkEmail) {
       return res.status(409).json({
-        error: 'email already exists, please choose another email',
+        email: 'email already in use',
       });
     }
 
@@ -21,10 +21,10 @@ class UserChecks {
   }
 
   async checkSignin(req, res, next) {
-    const checkUsername = await User.findOne({ username: req.body.username });
+    const checkUsername = await Artist.findOne({ username: req.body.username });
     if (!checkUsername) {
       return res.status(404).json({
-        error: 'Invalid username or password',
+        username: 'Invalid username or password',
       });
     }
 
@@ -35,7 +35,7 @@ class UserChecks {
 
     if (!checkPassword) {
       return res.status(404).json({
-        error: 'Invalid username or password',
+        password: 'Invalid username or password',
       });
     }
 
@@ -43,4 +43,4 @@ class UserChecks {
   }
 }
 
-export default new UserChecks();
+export default new ArtistChecks();

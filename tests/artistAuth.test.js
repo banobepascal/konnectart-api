@@ -1,6 +1,6 @@
 // import mongoose from 'mongoose';
 import request from 'supertest';
-import User from '../api/models/user';
+import Artist from '../api/models/artist';
 
 let server;
 describe('api/auth', () => {
@@ -8,7 +8,7 @@ describe('api/auth', () => {
     server = require('../server');
   });
   afterAll(async () => {
-    await User.deleteMany({});
+    await Artist.deleteMany({});
     await server.close();
   });
 
@@ -18,6 +18,7 @@ describe('api/auth', () => {
   let email;
   let password;
   let confirmPassword;
+  let bio;
   let isArtist;
   let isAdmin;
 
@@ -28,6 +29,7 @@ describe('api/auth', () => {
     email,
     password,
     confirmPassword,
+    bio,
     isArtist,
     isAdmin,
   });
@@ -39,11 +41,12 @@ describe('api/auth', () => {
     (email = 'chris@test.com'),
     (password = 'Chrisevanstest1!'),
     (confirmPassword = 'Chrisevanstest1!'),
+    (bio = 'i am an artist'),
     (isArtist = false),
     (isAdmin = false);
   });
   describe('POST /signup', () => {
-    it('should signup user on success', async () => {
+    it('should signup artist on success', async () => {
       const res = await execSignup();
       expect(res.status).toBe(201);
     });
@@ -77,6 +80,11 @@ describe('api/auth', () => {
       const res = await execSignup();
       expect(res.status).toBe(400);
     });
+    it('should return 400 if username is not a valid string', async () => {
+      bio = '';
+      const res = await execSignup();
+      expect(res.status).toBe(400);
+    });
     it('should return 400 if isArtist is not boolean', async () => {
       isArtist = null;
       const res = await execSignup();
@@ -104,19 +112,19 @@ describe('api/auth', () => {
       username,
       password,
     });
-    it('should sign-in user on success', async () => {
+    it('should sign-in artist on success', async () => {
       username = 'chrisevans';
       password = 'Chrisevanstest1!';
       const res = await execSignin();
       expect(res.status).toBe(200);
     });
-    it('should not sign-in user on invalid username', async () => {
+    it('should not sign-in artist on invalid username', async () => {
       username = 'chrisevan';
       password = 'Chrisevanstest1!';
       const res = await execSignin();
       expect(res.status).toBe(404);
     });
-    it('should sign-in user on wrong password', async () => {
+    it('should sign-in artist on wrong password', async () => {
       username = 'chrisevans';
       password = 'Chrisevanstest';
       const res = await execSignin();

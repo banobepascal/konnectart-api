@@ -1,9 +1,9 @@
 import express from 'express';
-import userRoute from '../routes/userAuth.routes';
+import artistRoute from '../routes/userAuth.routes';
 
 const app = express();
 app.use(express.json());
 
-app.use(userRoute);
+app.use(artistRoute);
 
 export default app;

@@ -14,7 +14,7 @@ const joiValidations = Joi.string()
   .required();
 
 class Validation {
-  validateUserInputs(req, res, next) {
+  validateArtistInputs(req, res, next) {
     const schema = {
       firstname: joiValidations.error(() => ({
         message:
@@ -51,6 +51,15 @@ class Validation {
         .required()
         .error(() => ({
           message: "Passwords don't match",
+        })),
+      bio: Joi.string()
+        .min(8)
+        .max(1024)
+        .regex(stringValidator)
+        .required()
+        .error(() => ({
+          message:
+            'bio should start with a letter and minimum of 8 characters',
         })),
       isArtist: Joi.boolean().error(() => ({
         message: 'isArtist has to be a boolean',

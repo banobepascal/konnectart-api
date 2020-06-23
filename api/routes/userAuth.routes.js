@@ -1,17 +1,17 @@
 import express from 'express';
-import UserAuth from '../controllers/userAuth';
+import ArtistAuth from '../controllers/artistAuth';
 import Validation from '../middleware/validation';
-import UserChecks from '../middleware/userChecks';
+import ArtistChecks from '../middleware/userChecks';
 
-const userRoute = express.Router();
+const artistRoute = express.Router();
 
-userRoute.post(
+artistRoute.post(
   '/api/auth/signup',
-  Validation.validateUserInputs,
-  UserChecks.checkSignup,
-  UserAuth.signUp
+  Validation.validateArtistInputs,
+  ArtistChecks.checkSignup,
+  ArtistAuth.signUp
 );
 
-userRoute.post('/api/auth/signin', UserChecks.checkSignin, UserAuth.signIn);
+artistRoute.post('/api/auth/signin', ArtistChecks.checkSignin, ArtistAuth.signIn);
 
-export default userRoute;
+export default artistRoute;

@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_KEY);
-    req.user = decoded;
+    req.artist = decoded;
     next();
   } catch (ex) {
     return res.status(401).json({
