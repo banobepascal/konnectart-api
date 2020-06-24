@@ -1,10 +1,10 @@
 import request from 'supertest';
-import Artist from '../api/models/artist';
+import Artist from '../../api/models/artist';
 
 let server;
 describe('api/auth/artist', () => {
   beforeEach(() => {
-    server = require('../server');
+    server = require('../../server');
   });
   afterAll(async () => {
     await Artist.deleteMany({});

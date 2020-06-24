@@ -1,10 +1,10 @@
 import request from 'supertest';
-import User from '../api/models/user';
+import User from '../../api/models/user';
 
 let server;
 describe('api/auth/user', () => {
   beforeEach(() => {
-    server = require('../server');
+    server = require('../../server');
   });
   afterAll(async () => {
     await User.deleteMany({});
