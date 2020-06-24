@@ -43,6 +43,10 @@ const confirmPassword = Joi.any()
     message: "Passwords don't match",
   }));
 
+const isAdmin = Joi.boolean().error(() => ({
+  message: 'isAdmin has to be a boolean',
+}));
+
 class Validation {
   validateUserSignup(req, res, next) {
     const schema = {
@@ -50,6 +54,7 @@ class Validation {
       email,
       password,
       confirmPassword,
+      isAdmin,
     };
 
     return exceptionHandler(Joi.validate(req.body, schema), res, next);
@@ -81,9 +86,7 @@ class Validation {
       isArtist: Joi.boolean().error(() => ({
         message: 'isArtist has to be a boolean',
       })),
-      isAdmin: Joi.boolean().error(() => ({
-        message: 'isAdmin has to be a boolean',
-      })),
+      isAdmin,
     };
 
     return exceptionHandler(Joi.validate(req.body, schema), res, next);
