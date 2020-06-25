@@ -17,7 +17,12 @@ class ArtistAuth {
     artist.password = Helpers.hashpassword(artist.password);
     await artist.save();
 
-    const token = Helpers.generateToken(artist.id, artist.isArtist, artist.isAdmin);
+    const token = Helpers.generateToken(
+      artist.id,
+      artist.username,
+      artist.isArtist,
+      artist.isAdmin
+    );
     res.status(201).json({
       message: 'Your account has been created successfully',
       data: token,
@@ -25,9 +30,12 @@ class ArtistAuth {
   }
 
   async signIn(req, res) {
-    const artistUsername = await Artist.findOne({ username: req.body.username });
+    const artistUsername = await Artist.findOne({
+      username: req.body.username,
+    });
     const token = Helpers.generateToken(
       artistUsername.id,
+      artistUsername.username,
       artistUsername.isArtist,
       artistUsername.isAdmin
     );

@@ -25,17 +25,24 @@ class Artists {
       artist: {
         fullName: fullName.join(' '),
         username: username.username,
-        bio: username.bio,
         followers: username.followers.length,
+        bio: username.bio,
       },
     });
   }
 
   async followArtist(req, res) {
-    const artist = await Artist.findOne({ username: req.params.username });
-    let follower = artist.followers.push(req.user.id);
-    console.log(req.user._id);
-    follower = await follower.save();
+    const follower = await Artist.findOneAndUpdate(
+      req.params.username,
+      {
+        followers: {
+          _id: req.user._id,
+          username: req.user.username,
+        },
+      },
+      { new: true }
+    );
+    console.log(follower);
     return res
       .status(200)
       .json({ message: `You have followed ${req.params.username}` });

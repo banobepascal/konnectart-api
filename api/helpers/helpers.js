@@ -9,9 +9,11 @@ class Helpers {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
   }
 
-  static generateToken(id, isArtist, isAdmin) {
+  static generateToken(id, username, isArtist, isAdmin) {
     const token = jwt.sign(
-      { _id: id, _isArtist: isArtist, _isAdmin: isAdmin },
+      {
+        _id: id, username, isArtist, isAdmin
+      },
       process.env.JWT_KEY,
       {
         expiresIn: '1day',
