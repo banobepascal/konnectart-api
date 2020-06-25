@@ -70,6 +70,17 @@ class UserChecks {
 
     next();
   }
+
+  async checkUserName(req, res, next) {
+    const checkUsername = await Artist.findOne({ username: req.params.username });
+    if (!checkUsername) {
+      return res.status(404).json({
+        username: 'artist not found',
+      });
+    }
+
+    next();
+  }
 }
 
 export default new UserChecks();

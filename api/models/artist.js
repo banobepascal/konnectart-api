@@ -41,6 +41,7 @@ const artistSchema = new mongoose.Schema({
   },
   isArtist: Boolean,
   isAdmin: Boolean,
+  followers: Array,
 });
 
 const Artist = mongoose.model('Artist', artistSchema);
