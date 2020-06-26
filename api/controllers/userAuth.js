@@ -13,7 +13,7 @@ class UserAuth {
       isAdmin: req.body.isAdmin,
     });
 
-    user.password = await Helpers.hashpassword(user.password);
+    user.password = Helpers.hashpassword(user.password);
     await user.save();
 
     const token = Helpers.generateToken(user.id, user.isArtist, user.isAdmin);

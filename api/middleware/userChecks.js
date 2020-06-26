@@ -23,7 +23,7 @@ class UserChecks {
   async checkSignin(req, res, next) {
     const checkUsername = await User.findOne({ username: req.body.username });
     if (!checkUsername) {
-      return res.status(400).json({
+      return res.status(404).json({
         error: 'Invalid username or password',
       });
     }
@@ -34,7 +34,7 @@ class UserChecks {
     );
 
     if (!checkPassword) {
-      return res.status(400).json({
+      return res.status(404).json({
         error: 'Invalid username or password',
       });
     }
