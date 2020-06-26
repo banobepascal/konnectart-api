@@ -1,17 +1,27 @@
 import mongoose from 'mongoose';
 import Joi from 'joi';
 
-const Image = mongoose.model('Images', new mongoose.Schema({
-  image: {
-    data: Buffer,
-    contentType: String,
-    required: true,
-  },
-}));
+const Image = mongoose.model(
+  'Content',
+  new mongoose.Schema({
+    caption: {
+      type: String,
+      min: 0,
+      max: 140,
+      required: true,
+    },
+    image: {
+      data: Buffer,
+      contentType: String,
+      required: true,
+    },
+  })
+);
 
 function validateImage(image) {
   const schema = {
-    name: Joi.buffer().required(),
+    caption: Joi.string().min(0).max(140).required(),
+    image: Joi.string().min(0).max(140).required(),
   };
 
   return Joi.validate(image, schema);

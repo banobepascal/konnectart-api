@@ -1,4 +1,4 @@
-exports.mockUser = {
+exports.mockArtist = {
   firstname: 'john',
   lastname: 'Doe',
   username: 'johndoe',
