@@ -32,20 +32,18 @@ class Artists {
   }
 
   async followArtist(req, res) {
-    const follower = await Artist.findOneAndUpdate(
-      req.params.username,
-      {
+    const follower = await Artist.findOneAndUpdate(req.params.username, {
+      $push: {
         followers: {
           _id: req.user._id,
           username: req.user.username,
         },
       },
-      { new: true }
-    );
-    console.log(follower);
+    });
+
     return res
       .status(200)
-      .json({ message: `You have followed ${req.params.username}` });
+      .json({ message: `You have followed ${follower.username}` });
   }
 }
 

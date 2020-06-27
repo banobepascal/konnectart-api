@@ -72,10 +72,26 @@ class UserChecks {
   }
 
   async checkUserName(req, res, next) {
-    const checkUsername = await Artist.findOne({ username: req.params.username });
+    const checkUsername = await Artist.findOne({
+      username: req.params.username,
+    });
     if (!checkUsername) {
       return res.status(404).json({
         username: 'artist not found',
+      });
+    }
+
+    next();
+  }
+
+  async checkFollower(req, res, next) {
+    const artist = await Artist.findOne({ username: req.params.username });
+    const checkFollower = artist.followers.find(
+      (follower) => follower._id === req.user._id
+    );
+    if (checkFollower) {
+      return res.status(409).json({
+        error: `You already following ${artist.username}`,
       });
     }
 

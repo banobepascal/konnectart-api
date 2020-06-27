@@ -15,6 +15,7 @@ artistsRoute.post(
   '/api/konnectart/artists/:username',
   verifyToken,
   UserChecks.checkUserName,
+  UserChecks.checkFollower,
   Artists.followArtist
 );
 

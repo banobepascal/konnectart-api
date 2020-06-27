@@ -39,9 +39,14 @@ const artistSchema = new mongoose.Schema({
     minlength: 8,
     maxlength: 1024,
   },
+  photo: {
+    data: Buffer,
+    contentType: String
+  },
   isArtist: Boolean,
   isAdmin: Boolean,
   followers: Array,
+  following: Array,
 });
 
 const Artist = mongoose.model('Artist', artistSchema);
