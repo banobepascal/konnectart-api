@@ -11,11 +11,11 @@ artistsRoute.get(
   UserChecks.checkUserName,
   Artists.getArtistByUsername
 );
-artistsRoute.post(
+artistsRoute.patch(
   '/api/konnectart/artists/:username',
   verifyToken,
   UserChecks.checkUserName,
-  UserChecks.checkFollower,
+  // UserChecks.checkForArtist,
   Artists.followArtist
 );
 
