@@ -1,4 +1,5 @@
 import Artist from '../models/artist';
+import User from '../models/user';
 
 class Artists {
   async getAllArtists(req, res) {
@@ -31,19 +32,18 @@ class Artists {
     });
   }
 
-  async followArtist(req, res) {
-    const follower = await Artist.findOneAndUpdate(req.params.username, {
+  async addFollowing(req, res) {
+    const user = await User.findOneAndUpdate(req.user._id, {
       $push: {
-        followers: {
-          _id: req.user._id,
-          username: req.user.username,
+        following: {
+          username: req.params.username,
         },
       },
     });
 
     return res
       .status(200)
-      .json({ message: `You have followed ${follower.username}` });
+      .json({ message: `You have followed ${user}` });
   }
 }
 
