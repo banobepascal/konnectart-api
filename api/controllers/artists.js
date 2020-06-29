@@ -42,7 +42,6 @@ class Artists {
         },
       },
     });
-    console.log(user);
     return res
       .status(200)
       .json({ message: `You have followed ${artist.username}` });
