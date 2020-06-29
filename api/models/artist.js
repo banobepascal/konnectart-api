@@ -45,7 +45,6 @@ const artistSchema = new mongoose.Schema({
   },
   isArtist: Boolean,
   isAdmin: Boolean,
-  followers: Array,
   following: Array,
 });
 
