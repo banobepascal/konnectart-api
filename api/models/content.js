@@ -10,11 +10,6 @@ const Image = mongoose.model(
       max: 140,
       required: true,
     },
-    image: {
-      data: Buffer,
-      contentType: String,
-      required: true,
-    },
   })
 );
 
